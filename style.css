@@ -29,6 +29,10 @@ body{
     font-weight: bold;
 }
 
+.hide{
+    display: none;
+}
+
 .red{
     color: red;
 }

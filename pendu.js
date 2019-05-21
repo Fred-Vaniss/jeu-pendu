@@ -7,33 +7,45 @@ const penduField = document.getElementById("pendu");
 const chancesField = document.getElementById("chances");
 const msgField = document.getElementById("message");    // Champ d'affichage des lettres dans le HTML
 
+const inputDiv = document.getElementById("gameInputs");
+const resetDiv = document.getElementById("resetInput");
+
 let found = 0;      // Compteur de lettres trouvés
 let chance = 7;     // Compteur de chances
 let inputs = []     // Tableau des lettres déjà insérés
 
 let word = "";
-let motArray = [];      // Tableau vide du mot
+let wordArray = [];      // Tableau vide du mot
 let pendu = [];         // Tableau vide de l'affichage du pendu
 
 resetGame();
 
 function resetGame(){
-    motArray = [];
+    penduField.innerHTML = ''
+    msgField.innerHTML = ''
+    penduField.className=""
+
+
+    wordArray = [];
     pendu = [];
 
     found = 0;
     chance = 7;
     inputs = [];
 
-    let rand = Math.floor(Math.random() * 4)
+    let rand = Math.floor(Math.random() * wordTable.length)
     word = wordTable[rand]
     log(rand)
 
     for(i = 0; i < word.length; i++) {
-        motArray.push(word[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
+        wordArray.push(word[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
         pendu.push("_")                       // Création de cases vide pour les lettres trouvés
         penduField.innerHTML += "_ "
     }
+
+    inputDiv.className=''
+    resetDiv.className='hide'
+    chancesField.innerHTML = `Il vous reste ${chance} essais.`
 }
 
 
@@ -45,12 +57,16 @@ document.getElementById("letter").addEventListener("keypress", function(key){
     }
 })
 
+// Boutton recommencer
+document.getElementById("resetButton").addEventListener("click", resetGame);
+
 function inputCheck () {
     let letter = letterInput.value
     if(letter.match(/[a-z]/i)){
         guessLetter(letter.toUpperCase());
     } else {
-        console.error("Ce n'est pas une lettre");
+        msgField.className = 'red'
+        msgField.innerHTML = "Ce n'est pas une lettre valide";
     }
 
     letterInput.value = ''
@@ -64,16 +80,19 @@ function guessLetter(letter){
         return;
     }
 
-    for(i = 0; i < motArray.length; i++) {
-        if (motArray[i] == letter){
+    let isFound = false;
+    for(i = 0; i < wordArray.length; i++) {
+        if (wordArray[i] == letter){
             pendu[i] = letter;
             found++
-            chance++
+            isFound = true;
         }
     }
 
     inputs.push(letter)
-    chance--
+    if (!isFound){
+        chance--
+    }
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
     for(i = 0; i < pendu.length; i++) {
@@ -85,13 +104,33 @@ function guessLetter(letter){
     msgField.innerHTML = ''
 
     
-    if(found == motArray.length){
+    if(found == wordArray.length){
         msgField.innerHTML = 'Vous avez gagné!'
         msgField.className = "green"
-        alert("Vous avez gagné!")
+        gameOver(true);
     } else if (chance == 0) {
         msgField.innerHTML = 'Vous avez perdu!'
         msgField.className = "red"
-        alert("Vous avez perdu!")
+        gameOver(false);
+    }
+}
+
+function gameOver(won){
+    inputDiv.className='hide'
+    resetDiv.className=''
+    
+    if (won == true){
+        penduField.className="green";
+    } else {
+        let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
+        penduField.innerHTML=''
+        for(i = 0; i < pendu.length; i++) {
+            if (wordArray[i] == pendu[i]){
+                penduField.innerHTML += `${wordArray[i]} `
+            } else{
+                penduField.innerHTML += `<span class="red">${wordArray[i]}</span> `
+            }
+        }
+    
     }
 }
