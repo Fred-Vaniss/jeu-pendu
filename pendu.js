@@ -1,24 +1,41 @@
 console.clear();
 let log = console.log
 
+const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Burger"]    // Variable du mot à trouver
 const letterInput = document.getElementById("letter");
 const penduField = document.getElementById("pendu");
 const chancesField = document.getElementById("chances");
 const msgField = document.getElementById("message");    // Champ d'affichage des lettres dans le HTML
 
-const mot = "Chaise"    // Variable du mot à trouver
-let motArray = [];      // Tableau vide du mot
-let pendu = [];         // Tableau vide de l'affichage du pendu
-
-for(i = 0; i < mot.length; i++) {
-    motArray.push(mot[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
-    pendu.push("_")                       // Création de cases vide pour les lettres trouvés
-    penduField.innerHTML += "_ "
-}
-
 let found = 0;      // Compteur de lettres trouvés
 let chance = 7;     // Compteur de chances
 let inputs = []     // Tableau des lettres déjà insérés
+
+let word = "";
+let motArray = [];      // Tableau vide du mot
+let pendu = [];         // Tableau vide de l'affichage du pendu
+
+resetGame();
+
+function resetGame(){
+    motArray = [];
+    pendu = [];
+
+    found = 0;
+    chance = 7;
+    inputs = [];
+
+    let rand = Math.floor(Math.random() * 4)
+    word = wordTable[rand]
+    log(rand)
+
+    for(i = 0; i < word.length; i++) {
+        motArray.push(word[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
+        pendu.push("_")                       // Création de cases vide pour les lettres trouvés
+        penduField.innerHTML += "_ "
+    }
+}
+
 
 // Boutton entrer dans la page HTML
 document.getElementById("guessButton").addEventListener("click", inputCheck);
