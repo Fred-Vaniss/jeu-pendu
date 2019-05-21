@@ -2,7 +2,7 @@ console.clear();
 let log = console.log
 
 // Tableau des différents mots à trouver (un mot sera choisi aléatoirement)
-const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Burger"]  
+const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Hamburger","Tortue","Baguette","Ordinateur","Donjon","Tacos","Clavier","Lettre","Papier","Prince","Princesse","Complainte","Marin","Tartiflette"]  
 
 // ID des éléments HTML
 const letterInput = document.getElementById("letter");
