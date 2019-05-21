@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:700&display=swap');
+
+
+html{
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    background-color: lightsteelblue;
+}
+
+.wrapper{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#pendu{
+    font-family: 'Roboto Mono', monospace;
+}
+
+#message{
+    font-weight: bold;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color:green;
+}
