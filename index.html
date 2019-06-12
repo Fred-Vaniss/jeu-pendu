@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,58 @@
     <title>Jeu du pendu</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="wrapper">
         <h1>Jeu du pendu</h1>
-        <div id="gameInputs">
-            <input type="text" name="letter" id="letter" maxlength="1">
-            <button id="guessButton">Entrer</button>
+        <div class="flex">
+            <div class="col">
+                <div id="gameInputs">
+                    <input type="text" name="letter" id="letter" maxlength="1">
+                    <button id="guessButton">Entrer</button>
+                </div>
+                <div id="resetInput" class="hide">
+                    <button id="resetButton">Recommencer</button>
+                </div>
+                <h2 id="pendu"></h2>
+                <p id="chances"></p>
+                <p id="message"></p>
+            </div>
+            <div class="col">
+                <svg id="Hangman" xmlns="http://www.w3.org/2000/svg" width="171.5" height="410" viewBox="0 0 171.5 410">
+                    <title>hangman</title>
+                    <line class="hang attempt-1 cls-1" x1="137.5" y1="406" x2="167.5" y2="406" />
+                    <line class="hang attempt-2 cls-1" x1="155.5" y1="4" x2="155.5" y2="404" />
+                    <g class="hang attempt-3 ">
+                        <line class="cls-1" x1="47.5" y1="4" x2="155.5" y2="4" />
+                        <line class="cls-1" x1="106.5" y1="4" x2="156" y2="53.5" />
+                    </g>
+                    <g class="hang attempt-4 ">
+                        <line class="cls-2" x1="47.5" y1="4" x2="47.5" y2="51.5" />
+                        <circle class="cls-3" cx="48.5" cy="84" r="32" />
+                    </g>
+                    <line class="hang attempt-5 cls-4" x1="48.5" y1="116" x2="48.5" y2="288" />
+                    <line class="hang attempt-6 cls-4" x1="1.5" y1="196" x2="48.5" y2="116" />
+                    <line class="hang attempt-7 cls-4" x1="95.5" y1="196" x2="48.5" y2="116" />
+                    <line class="hang attempt-8 cls-4" x1="1.5" y1="368" x2="48.5" y2="288" />
+                    <g class="hang attempt-9 ">
+                        <line class="cls-4" x1="95.5" y1="368" x2="48.5" y2="288" />
+                        <polyline class="cls-4" points="33.5 72 43.5 78 33.5 84" />
+                        <polyline class="cls-4" points="63.5 72 53.5 78 63.5 84" />
+                        <path class="cls-4" d="M130.72,134.31c5-5,7-6,12-6s7,4,10,6"
+                            transform="translate(-94.22 -32.31)" />
+                        <line class="cls-4" x1="47.5" y1="96" x2="47.67" y2="100.63" />
+                        <path class="cls-4" d="M141.89,137.75c5.28,0,4.62-5.45,5.28-8.14"
+                            transform="translate(-94.22 -32.31)" />
+                        <path class="cls-4" d="M136.72,129.44s1,8.31,5.17,8.31c3,0,4.62-5.45,5.28-8.14"
+                            transform="translate(-94.22 -32.31)" />
+                    </g>
+                </svg>
+            </div>
         </div>
-        <div id="resetInput" class="hide">
-            <button id="resetButton">Recommencer</button>
-        </div>
-        <h2 id="pendu"></h2>
-        <p id="chances"></p>
-        <p id="message"></p>
     </div>
-    
+
     <script src="pendu.js"></script>
 </body>
+
 </html>

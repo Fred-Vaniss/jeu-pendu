@@ -14,7 +14,7 @@ const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
 
 let found = 0;          // Compteur de lettres trouvés
-let chance = 7;         // Compteur de chances
+let attempt = 0;         // Compteur de chances
 let inputs = []         // Tableau des lettres déjà insérés
 
 let word = "";
@@ -35,7 +35,7 @@ function resetGame(){
     pendu = [];
 
     found = 0;
-    chance = 7;
+    attempt = 0;
     inputs = [];
 
     // On prend un mot aléatoire dans le tableau des mots
@@ -53,7 +53,16 @@ function resetGame(){
     
     inputDiv.className=''                                       // On affiche le champ de texte
     resetDiv.className='hide'                                   // On madsque le boutton "recommencer"
-    chancesField.innerHTML = `Il vous reste ${chance} essais.`  // On affiche le nombre d'essais resstant
+    //chancesField.innerHTML = `Il vous reste ${attempt} essais.`  // On affiche le nombre d'essais resstant
+
+    // On masque chaque partie du bonhomme pendu
+    for(let i = 1; i < 10; i++) {
+        document.getElementsByClassName(`attempt-${i}`)[0].style.display = "none";
+    }
+
+    // Message pour le débogage
+    console.log(`Le mot sélectionné est ${word}`)
+    console.log()
 }
 
 
@@ -103,7 +112,8 @@ function guessLetter(letter){
 
     // Si la lettre ne figurait pas dans le mot, on retire une chance
     if (!isFound){
-        chance--
+        attempt++
+        document.getElementsByClassName(`attempt-${attempt}`)[0].style.display = 'inline'
     }
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
@@ -112,7 +122,7 @@ function guessLetter(letter){
     }
 
     penduField.innerHTML = stringPendu;
-    chancesField.innerHTML = `Il vous reste ${chance} essais.`
+    //chancesField.innerHTML = `Il vous reste ${attempt} essais.`
     msgField.innerHTML = ''
 
     // Affichage d'un message si on a gagné ou perdu
@@ -120,7 +130,7 @@ function guessLetter(letter){
         msgField.innerHTML = 'Vous avez gagné!'
         msgField.className = "green"
         gameOver(true);
-    } else if (chance == 0) {
+    } else if (attempt == 9) {
         msgField.innerHTML = 'Vous avez perdu!'
         msgField.className = "red"
         gameOver(false);

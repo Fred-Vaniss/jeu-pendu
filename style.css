@@ -2,41 +2,81 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:700&display=swap');
 
 
-html{
+html {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
 
 
-*, *:before, *:after{
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
 
-body{
+body {
     background-color: lightsteelblue;
 }
 
-.wrapper{
+.wrapper {
     max-width: 900px;
     margin: 0 auto;
 }
 
-#pendu{
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+#pendu {
     font-family: 'Roboto Mono', monospace;
 }
 
-#message{
+#message {
     font-weight: bold;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
-.red{
+.red {
     color: red;
 }
 
-.green{
-    color:green;
+.green {
+    color: green;
+}
+
+/* ================== SVG du pendu ================== */
+.cls-1,
+.cls-4 {
+    fill: none;
+}
+
+.cls-1,
+.cls-2,
+.cls-3,
+.cls-4 {
+    stroke: #000;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+
+.cls-1 {
+    stroke-width: 8px;
+}
+
+.cls-2,
+.cls-3 {
+    fill: #fff;
+}
+
+.cls-3,
+.cls-4 {
+    stroke-width: 3px;
+}
+
+.hang {
+    /* display: none; */
 }
