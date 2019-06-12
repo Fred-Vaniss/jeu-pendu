@@ -2,7 +2,7 @@ console.clear();
 let log = console.log
 
 // Tableau des différents mots à trouver (un mot sera choisi aléatoirement)
-const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Hamburger","Tortue","Baguette","Ordinateur","Donjon","Tacos","Clavier","Lettre","Papier","Prince","Princesse","Complainte","Marin","Tartiflette"] 
+// const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Hamburger","Tortue","Baguette","Ordinateur","Donjon","Tacos","Clavier","Lettre","Papier","Prince","Princesse","Complainte","Marin","Tartiflette"] 
 
 // ID des éléments HTML
 const letterInput = document.getElementById("letter");
@@ -22,7 +22,28 @@ let wordArray = [];     // Tableau vide du mot
 let pendu = [];         // Tableau vide de l'affichage du pendu
 
 
-resetGame();
+let wordTable;
+
+let req = new XMLHttpRequest;
+req.open('get', 'assets/liste-mots.json', true);
+req.send()
+req.onreadystatechange = function (){
+    if(req.readyState === XMLHttpRequest.DONE){
+        if(req.status == 200){
+            wordTable = req.response;    // On stocke les données récupérés dans une variable
+            wordTable = JSON.parse(wordTable);     // On convertis son texte brut en véritable données JSON
+            resetGame();
+        } else {
+            console.error(`Erreur ${req.status}`)
+            msgField.innerHTML = `Erreur ${req.status} lors de la lecture de la liste des mots`
+            msgField.style.color = "red"
+            msgField.style.fontSize = "30px"
+
+            inputDiv.style.display = "none"
+        }
+    }
+}
+
 // Réinitialisation
 function resetGame(){
     // On vide les différents champs de texte
