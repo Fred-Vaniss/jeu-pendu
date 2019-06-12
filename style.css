@@ -48,6 +48,10 @@ body {
     color: green;
 }
 
+.space {
+    margin-left: 20px;
+}
+
 /* ================== SVG du pendu ================== */
 .cls-1,
 .cls-4 {

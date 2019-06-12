@@ -2,7 +2,7 @@ console.clear();
 let log = console.log
 
 // Tableau des différents mots à trouver (un mot sera choisi aléatoirement)
-const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Hamburger","Tortue","Baguette","Ordinateur","Donjon","Tacos","Clavier","Lettre","Papier","Prince","Princesse","Complainte","Marin","Tartiflette"]  
+const wordTable = ["Chaise","Table","Fraise","Veau","Pain","Souris","Tartine","Hamburger","Tortue","Baguette","Ordinateur","Donjon","Tacos","Clavier","Lettre","Papier","Prince","Princesse","Complainte","Marin","Tartiflette"] 
 
 // ID des éléments HTML
 const letterInput = document.getElementById("letter");
@@ -46,14 +46,19 @@ function resetGame(){
     // On transpose les lettres du mot dans un tableau
     for(i = 0; i < word.length; i++) {
         wordArray.push(word[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
-        pendu.push("_")                       // Création de cases vide pour les lettres trouvés
-        penduField.innerHTML += "_ "          // Cases vide dans l'affichage HTML
+        if (word[i] == " "){
+            pendu.push(" ") 
+            penduField.innerHTML += `<span class="space"></span>` 
+            found++
+        } else {
+            pendu.push("_")                       // Création de cases vide pour les lettres trouvés
+            penduField.innerHTML += "_ "          // Cases vide dans l'affichage HTML
+        }
     }
 
     
     inputDiv.className=''                                       // On affiche le champ de texte
     resetDiv.className='hide'                                   // On madsque le boutton "recommencer"
-    //chancesField.innerHTML = `Il vous reste ${attempt} essais.`  // On affiche le nombre d'essais resstant
 
     // On masque chaque partie du bonhomme pendu
     for(let i = 1; i < 10; i++) {
@@ -61,8 +66,8 @@ function resetGame(){
     }
 
     // Message pour le débogage
-    console.log(`Le mot sélectionné est ${word}`)
-    console.log()
+    console.log(`Le mot sélectionné est: "${word}"`)
+    console.log(wordArray)
 }
 
 
@@ -102,9 +107,29 @@ function guessLetter(letter){
     let isFound = false;
     for(i = 0; i < wordArray.length; i++) {
         if (wordArray[i] == letter){
-            pendu[i] = letter;
-            found++
-            isFound = true;
+            isFound = foundLetter(i,letter)
+        } else {
+            switch (letter) {
+                case "E":
+                    switch (wordArray[i]) {
+                        case "É":
+                            isFound = foundLetter(i,"É");
+                            break;
+                        case "È":
+                            isFound = foundLetter(i,"È");
+                            break;
+                        case "Ê":
+                                isFound = foundLetter(i,"Ê");
+                                break;
+                    }
+                    break;
+                case "I":
+                    switch (i) {
+                        case "Ï":
+                            isFound = foundLetter(i,"Ï");
+                            break;
+                    }
+            }
         }
     }
 
@@ -118,11 +143,13 @@ function guessLetter(letter){
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
     for(i = 0; i < pendu.length; i++) {
+        if (pendu[i] == " "){
+            stringPendu = stringPendu + `<span class="space"></span>`
+        }
         stringPendu = stringPendu + pendu[i] + " "  // Insertion des lettres trouvés dans le string
     }
 
     penduField.innerHTML = stringPendu;
-    //chancesField.innerHTML = `Il vous reste ${attempt} essais.`
     msgField.innerHTML = ''
 
     // Affichage d'un message si on a gagné ou perdu
@@ -137,6 +164,13 @@ function guessLetter(letter){
     }
 }
 
+// Fonction de lettre trouvée
+function foundLetter(i,letter){
+    pendu[i] = letter;
+    found++
+    return true;
+}
+
 // Fonction de fin de partie
 function gameOver(won){
     // On masque le champ de texte et affiche le boutton recommencer
@@ -148,14 +182,25 @@ function gameOver(won){
         penduField.className="green";
     } else { // Si la partie est perdue on affiche les lettres non trouvés en rouge
         let stringPendu = "" 
-        penduField.innerHTML=''
+        penduField.innerHTML=""
+        
         for(i = 0; i < pendu.length; i++) {
-            if (wordArray[i] == pendu[i]){
+            if (wordArray[i] == " "){
+                penduField.innerHTML += `<span class="space"></span> `
+            }else if (wordArray[i] == pendu[i]){
                 penduField.innerHTML += `${wordArray[i]} `
-            } else{
+            } else {
                 penduField.innerHTML += `<span class="red">${wordArray[i]}</span> `
             }
         }
+
+        // penduField.innerHTML=stringPendu
     
+    }
+
+    if (won == "debug"){
+        for(let i = 1; i < 10; i++) {
+            document.getElementsByClassName(`attempt-${i}`)[0].style.display = "inline";
+        }
     }
 }
