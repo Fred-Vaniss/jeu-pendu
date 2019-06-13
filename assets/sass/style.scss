@@ -28,8 +28,13 @@ body {
     justify-content: space-between;
 }
 
-#pendu {
+#pendu{
     font-family: 'Roboto Mono', monospace;
+}
+
+#used{
+    @extend #pendu;
+    text-align: right;
 }
 
 #message {

@@ -9,6 +9,7 @@ const letterInput = document.getElementById("letter");
 const penduField = document.getElementById("pendu");
 const chancesField = document.getElementById("chances");
 const msgField = document.getElementById("message");
+const used = document.getElementById("used")
 
 const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
@@ -48,7 +49,8 @@ req.onreadystatechange = function (){
 function resetGame(wordParameter = null){
     // On vide les différents champs de texte
     penduField.innerHTML = ''  
-    msgField.innerHTML = ''     
+    msgField.innerHTML = ''   
+    used.innerHTML = ''  
     penduField.className=""     
 
     // On réinitialise toutes les variables
@@ -172,6 +174,7 @@ function guessLetter(letter){
                             isFound = foundLetter(i,"Ç");
                             break;
                     }
+                    break;
                 case "O":
                     switch (wordArray[i]){
                         case "Ô":
@@ -181,6 +184,17 @@ function guessLetter(letter){
                             isFound = foundLetter(i,"Ö");
                             break;
                     }
+                    break;
+                case "U":
+                    switch (wordArray[i]){
+                        case "Û":
+                            isFound = foundLetter(i,"Û");
+                            break;
+                        case "Ü":
+                            isFound = foundLetter(i,"Ü");
+                            break;
+                    }
+                    break;
             }
         }
     }
@@ -191,6 +205,7 @@ function guessLetter(letter){
     if (!isFound){
         attempt++
         document.getElementsByClassName(`attempt-${attempt}`)[0].style.display = 'inline'
+        used.innerHTML += `${letter} `
     }
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt

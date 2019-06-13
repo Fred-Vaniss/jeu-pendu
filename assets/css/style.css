@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:700&display=swap");
+html {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+body {
+  background-color: lightsteelblue;
+}
+
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#pendu, #used {
+  font-family: 'Roboto Mono', monospace;
+}
+
+#used {
+  text-align: right;
+}
+
+#message {
+  font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.space {
+  margin-left: 20px;
+}
+
+/* ================== SVG du pendu ================== */
+.cls-1,
+.cls-4 {
+  fill: none;
+}
+
+.cls-1,
+.cls-2,
+.cls-3,
+.cls-4 {
+  stroke: #000;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+}
+
+.cls-1 {
+  stroke-width: 8px;
+}
+
+.cls-2,
+.cls-3 {
+  fill: #fff;
+}
+
+.cls-3,
+.cls-4 {
+  stroke-width: 3px;
+}
+
+.hang {
+  /* display: none; */
+}
+/*# sourceMappingURL=style.css.map */
