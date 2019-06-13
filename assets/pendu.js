@@ -14,26 +14,27 @@ const used = document.getElementById("used")
 const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
 
-let found = 0;          // Compteur de lettres trouvés
+let found = 0;           // Compteur de lettres trouvés
 let attempt = 0;         // Compteur de chances
-let inputs = []         // Tableau des lettres déjà insérés
+let inputs = []          // Tableau des lettres déjà insérés
 
-let word = "";
-let wordArray = [];     // Tableau vide du mot
-let pendu = [];         // Tableau vide de l'affichage du pendu
+let word = "";           // Mot sélectionné vide
+let wordArray = [];      // Tableau vide du mot
+let pendu = [];          // Tableau vide de l'affichage du pendu
 
 
 let wordTable;
 
+// Requête pour récupérer la liste des mots contenu dans assets/liste-mots.json
 let req = new XMLHttpRequest;
 req.open('get', 'assets/liste-mots.json', true);
 req.send()
 req.onreadystatechange = function (){
     if(req.readyState === XMLHttpRequest.DONE){
         if(req.status == 200){
-            wordTable = req.response;    // On stocke les données récupérés dans une variable
-            wordTable = JSON.parse(wordTable);     // On convertis son texte brut en véritable données JSON
-            resetGame();
+            wordTable = req.response;                   // On stocke les données récupérés dans une variable
+            wordTable = JSON.parse(wordTable);          // On convertis son texte brut en véritable données JSON
+            resetGame();                                // On initialise le jeu
         } else {
             console.error(`Erreur ${req.status}`)
             msgField.innerHTML = `Erreur ${req.status} lors de la lecture de la liste des mots`
@@ -48,9 +49,9 @@ req.onreadystatechange = function (){
 // Réinitialisation
 function resetGame(wordParameter = null){
     // On vide les différents champs de texte
-    penduField.innerHTML = ''  
-    msgField.innerHTML = ''   
-    used.innerHTML = ''  
+    penduField.innerHTML = ''   
+    msgField.innerHTML = ''     
+    used.innerHTML = ''         
     penduField.className=""     
 
     // On réinitialise toutes les variables
@@ -66,7 +67,7 @@ function resetGame(wordParameter = null){
         let rand = Math.floor(Math.random() * wordTable.length)
         word = wordTable[rand]
         log(rand)
-    } else {
+    } else { // Si on éxécute la fonction avec un argument, il récupérera cette valeur en tant que ce mot à trouver
         word = wordParameter
     }
     
@@ -130,6 +131,7 @@ function inputCheck () {
     letterInput.value = ''
 }
 
+// Fonction de vérification de la lettre entrée
 function guessLetter(letter){
     // On vérifie d'abord si la lettre n'a pas été déjà entrée
     if (inputs.indexOf(letter) > -1){
@@ -145,6 +147,7 @@ function guessLetter(letter){
         if (wordArray[i] == letter){
             isFound = foundLetter(i,letter)
         } else {
+            // On vérifie si la réponse contiens un accens, si c'est le cas, elle sera accepté pour la lettre entrée
             switch (letter) {
                 case "E":
                     switch (wordArray[i]) {
@@ -204,8 +207,8 @@ function guessLetter(letter){
     // Si la lettre ne figurait pas dans le mot, on retire une chance
     if (!isFound){
         attempt++
-        document.getElementsByClassName(`attempt-${attempt}`)[0].style.display = 'inline'
-        used.innerHTML += `${letter} `
+        document.getElementsByClassName(`attempt-${attempt}`)[0].style.display = 'inline' // Affichage du morceau du SVG
+        used.innerHTML += `${letter} ` // Ajout de la lettre en dessous du bonhomme
     }
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
@@ -256,10 +259,7 @@ function gameOver(won){
             } else {
                 penduField.innerHTML += `<span class="red">${wordArray[i]}</span> `
             }
-        }
-
-        // penduField.innerHTML=stringPendu
-    
+        }    
     }
 
     if (won == "debug"){
