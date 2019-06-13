@@ -102,6 +102,11 @@ function resetGame(wordParameter = null){
         document.getElementsByClassName(`attempt-${i}`)[0].style.display = "none";
     }
 
+    for(let i = 4; i < 10; i++) {
+        document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+    }
+    document.getElementsByClassName(`mood-win`)[0].style.display = "none";
+
     // Message pour le débogage
     console.log(`Le mot sélectionné est: "${word}"`)
     console.log(wordArray)
@@ -210,6 +215,15 @@ function guessLetter(letter){
         document.getElementsByClassName(`attempt-${attempt}`)[0].style.display = 'inline' // Affichage du morceau du SVG
         used.innerHTML += `${letter} ` // Ajout de la lettre en dessous du bonhomme
     }
+
+    for(let i = 4; i < 10 ; i++){
+        document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+    }
+
+    if (attempt >= 4){
+        document.getElementsByClassName(`mood-${attempt}`)[0].style.display = "inline";
+    }
+
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
     for(i = 0; i < pendu.length; i++) {
@@ -252,6 +266,12 @@ function gameOver(won){
             } else {
                 penduField.innerHTML += `${wordArray[i]} `
             }
+        }
+        if (attempt >= 4){
+            for(let i = 4; i < 10 ; i++){
+                document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+            }
+            document.getElementsByClassName(`mood-win`)[0].style.display = "inline";
         }
     } else { // Si la partie est perdue on affiche les lettres non trouvés en rouge        
         msgField.innerHTML = 'Vous avez perdu!'

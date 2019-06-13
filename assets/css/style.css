@@ -60,17 +60,19 @@ body {
 }
 
 /* ================== SVG du pendu ================== */
-.cls-1,
-.cls-4 {
+.cls-1, .cls-4, .cls-6, .cls-7 {
   fill: none;
 }
 
-.cls-1,
-.cls-2,
-.cls-3,
-.cls-4 {
+.cls-1, .cls-2, .cls-3, .cls-4, .cls-6, .cls-7, .cls-8, .cls-9 {
   stroke: #000;
+}
+
+.cls-1, .cls-2, .cls-3, .cls-4, .cls-6, .cls-8, .cls-9 {
   stroke-linecap: round;
+}
+
+.cls-1, .cls-2, .cls-3, .cls-4, .cls-7 {
   stroke-miterlimit: 10;
 }
 
@@ -78,18 +80,20 @@ body {
   stroke-width: 8px;
 }
 
-.cls-2,
-.cls-3 {
+.cls-2, .cls-3, .cls-5, .cls-8, .cls-9 {
   fill: #fff;
 }
 
-.cls-3,
-.cls-4 {
+.cls-3, .cls-4, .cls-6, .cls-7, .cls-8 {
   stroke-width: 3px;
 }
 
-.hang {
-  /* display: none; */
+.cls-6, .cls-8, .cls-9 {
+  stroke-linejoin: round;
+}
+
+.cls-9 {
+  stroke-width: 2px;
 }
 
 /* ================== Menu de triche ================== */
