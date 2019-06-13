@@ -450,7 +450,6 @@
     "bétail",
     "béton",
     "bête",
-    "bœuf",
     "cabane",
     "cacher",
     "cachette",
@@ -878,7 +877,6 @@
     "côte",
     "côtelettes",
     "côtier",
-    "cœur",
     "damnation",
     "danger",
     "dangereux",
@@ -1799,7 +1797,6 @@
     "maison",
     "majeur",
     "mal",
-    "mal au cœur",
     "mal au ventre",
     "mal de tête",
     "malade",
@@ -1973,8 +1970,6 @@
     "négligent",
     "néon",
     "névrosé",
-    "nœud",
-    "nœuds",
     "objectif",
     "objet",
     "obligatoire",
@@ -2753,6 +2748,5 @@
     "éviter de",
     "évolution",
     "évoquer",
-    "île",
-    "œil"
+    "île"
 ]

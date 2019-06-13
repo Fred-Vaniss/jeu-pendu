@@ -68,8 +68,16 @@ function resetGame(){
     for(i = 0; i < word.length; i++) {
         wordArray.push(word[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
         if (word[i] == " "){
-            pendu.push(" ") 
+            pendu.push(`<span class="space"></span>` ) 
             penduField.innerHTML += `<span class="space"></span>` 
+            found++
+        } else if (word[i] == "-") {
+            pendu.push("-") 
+            penduField.innerHTML += `- ` 
+            found++
+        } else if (word[i] == "'") {
+            pendu.push("'") 
+            penduField.innerHTML += `' ` 
             found++
         } else {
             pendu.push("_")                       // Création de cases vide pour les lettres trouvés
@@ -140,14 +148,32 @@ function guessLetter(letter){
                             isFound = foundLetter(i,"È");
                             break;
                         case "Ê":
-                                isFound = foundLetter(i,"Ê");
-                                break;
+                            isFound = foundLetter(i,"Ê");
+                            break;
                     }
                     break;
                 case "I":
-                    switch (i) {
+                    switch (wordArray[i]) {
                         case "Ï":
                             isFound = foundLetter(i,"Ï");
+                            break;
+                        case "Î":
+                            isFound = foundLetter(i,"Î");
+                            break;
+                    }
+                case "C":
+                    switch (wordArray[i]){
+                        case "Ç":
+                            isFound = foundLetter(i,"Ç");
+                            break;
+                    }
+                case "O":
+                    switch (wordArray[i]){
+                        case "Ô":
+                            isFound = foundLetter(i,"Ô");
+                            break;
+                        case "Ö":
+                            isFound = foundLetter(i,"Ö");
                             break;
                     }
             }
@@ -164,9 +190,6 @@ function guessLetter(letter){
     
     let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
     for(i = 0; i < pendu.length; i++) {
-        if (pendu[i] == " "){
-            stringPendu = stringPendu + `<span class="space"></span>`
-        }
         stringPendu = stringPendu + pendu[i] + " "  // Insertion des lettres trouvés dans le string
     }
 
