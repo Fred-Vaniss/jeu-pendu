@@ -66,7 +66,7 @@ function resetGame(wordParameter = null){
         // On prend un mot aléatoire dans le tableau des mots
         let rand = Math.floor(Math.random() * wordTable.length)
         word = wordTable[rand]
-        log(rand)
+        log(`Mot numéro ${rand}`)
     } else { // Si on éxécute la fonction avec un argument, il récupérera cette valeur en tant que ce mot à trouver
         word = wordParameter
     }
@@ -221,12 +221,8 @@ function guessLetter(letter){
 
     // Affichage d'un message si on a gagné ou perdu
     if(found == wordArray.length){
-        msgField.innerHTML = 'Vous avez gagné!'
-        msgField.className = "green"
         gameOver(true);
     } else if (attempt == 9) {
-        msgField.innerHTML = 'Vous avez perdu!'
-        msgField.className = "red"
         gameOver(false);
     }
 }
@@ -243,14 +239,23 @@ function gameOver(won){
     // On masque le champ de texte et affiche le boutton recommencer
     inputDiv.className='hide'
     resetDiv.className=''
+    penduField.innerHTML=""
     
     // Si la partie est gagnée, on affiche le texte en vert
     if (won == true){
+        msgField.innerHTML = 'Vous avez gagné!'
+        msgField.className = "green"
         penduField.className="green";
-    } else { // Si la partie est perdue on affiche les lettres non trouvés en rouge
-        let stringPendu = "" 
-        penduField.innerHTML=""
-        
+        for(i = 0; i < pendu.length; i++) {
+            if (wordArray[i] == " "){
+                penduField.innerHTML += `<span class="space"></span> `
+            } else {
+                penduField.innerHTML += `${wordArray[i]} `
+            }
+        }
+    } else { // Si la partie est perdue on affiche les lettres non trouvés en rouge        
+        msgField.innerHTML = 'Vous avez perdu!'
+        msgField.className = "red"
         for(i = 0; i < pendu.length; i++) {
             if (wordArray[i] == " "){
                 penduField.innerHTML += `<span class="space"></span> `
@@ -262,9 +267,49 @@ function gameOver(won){
         }    
     }
 
-    if (won == "debug"){
+    if (won == "debug-lose"){
         for(let i = 1; i < 10; i++) {
             document.getElementsByClassName(`attempt-${i}`)[0].style.display = "inline";
         }
     }
+}
+
+// Code de triche pour afficher le menu de débogage caché
+const cheatCode = [37,39,38,40,38,37,39]
+let cheatSeq = 0
+let cheatActivated = false
+
+document.addEventListener("keydown", key => {
+    if (!cheatActivated){
+        if (key.keyCode == cheatCode[cheatSeq]){
+            cheatSeq++
+        } else {
+            cheatSeq = 0
+        }
+    
+    
+        if (cheatSeq == cheatCode.length){
+            document.getElementById("cheatMenu").style.display = "inline"
+            console.log("cheat activated!")
+            cheatActivated = true;
+    
+            document.getElementById("debug-win").addEventListener("click", () => gameOver(true))
+            document.getElementById("debug-lose").addEventListener("click", () => gameOver("debug-lose"))
+            
+            document.getElementById("custom").addEventListener("keypress", key => {   // Boutton entrer dans la page HTML
+                if(key.keyCode == 13){
+                    customWord();
+                }
+            })
+            
+            document.getElementById("debug-custom").addEventListener("click", () => customWord())
+
+            
+        }
+    }
+})
+
+function customWord(){
+    let custom = document.getElementById("custom").value
+    resetGame(custom)
 }

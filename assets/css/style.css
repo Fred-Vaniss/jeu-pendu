@@ -91,4 +91,9 @@ body {
 .hang {
   /* display: none; */
 }
+
+/* ================== Menu de triche ================== */
+#cheatMenu {
+  display: none;
+}
 /*# sourceMappingURL=style.css.map */
