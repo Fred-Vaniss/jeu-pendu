@@ -161,17 +161,7 @@ function guessLetter(letter){
                             break;
                     }
                 case "E":
-                    switch (wordArray[i]) {
-                        case "É":
-                            isFound = foundLetter(i,"É");
-                            break;
-                        case "È":
-                            isFound = foundLetter(i,"È");
-                            break;
-                        case "Ê":
-                            isFound = foundLetter(i,"Ê");
-                            break;
-                    }
+                    isFound = specialLetterCheck(i,"E",["É","È","Ê"])
                     break;
                 case "I":
                     switch (wordArray[i]) {
@@ -245,6 +235,16 @@ function guessLetter(letter){
     } else if (attempt == 9) {
         gameOver(false);
     }
+}
+
+function specialLetterCheck(i,letter,array){
+    let isFound = false
+    for(const l of array){
+        if (l == wordArray[i]){
+            isFound = foundLetter(i,l);
+        }
+    }
+    return isFound
 }
 
 // Fonction de lettre trouvée
