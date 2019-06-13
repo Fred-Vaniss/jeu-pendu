@@ -154,6 +154,12 @@ function guessLetter(letter){
         } else {
             // On vérifie si la réponse contiens un accens, si c'est le cas, elle sera accepté pour la lettre entrée
             switch (letter) {
+                case "A":
+                    switch (wordArray[i]) {
+                        case "Â":
+                            isFound = foundLetter(i,"Â");
+                            break;
+                    }
                 case "E":
                     switch (wordArray[i]) {
                         case "É":
