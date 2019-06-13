@@ -10,6 +10,7 @@ const penduField = document.getElementById("pendu");
 const chancesField = document.getElementById("chances");
 const msgField = document.getElementById("message");
 const used = document.getElementById("used")
+const hangGuy = document.getElementById("hang-guy")
 
 const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
@@ -33,7 +34,8 @@ req.onreadystatechange = function (){
     if(req.readyState === XMLHttpRequest.DONE){
         if(req.status == 200){
             wordTable = req.response;                   // On stocke les données récupérés dans une variable
-            wordTable = JSON.parse(wordTable);          // On convertis son texte brut en véritable données JSON
+            wordTable = JSON.parse(wordTable);  
+            hangGuy.style.display = "block";       // On convertis son texte brut en véritable données JSON
             resetGame();                                // On initialise le jeu
         } else {
             console.error(`Erreur ${req.status}`)
@@ -102,6 +104,7 @@ function resetGame(wordParameter = null){
         document.getElementsByClassName(`attempt-${i}`)[0].style.display = "none";
     }
 
+    // On masque l'humeur du personnage
     for(let i = 4; i < 10; i++) {
         document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
     }
@@ -155,49 +158,22 @@ function guessLetter(letter){
             // On vérifie si la réponse contiens un accens, si c'est le cas, elle sera accepté pour la lettre entrée
             switch (letter) {
                 case "A":
-                    switch (wordArray[i]) {
-                        case "Â":
-                            isFound = foundLetter(i,"Â");
-                            break;
-                    }
+                    isFound = specialLetterCheck(i,isFound,["Â"])
+                    break;
                 case "E":
-                    isFound = specialLetterCheck(i,"E",["É","È","Ê"])
+                    isFound = specialLetterCheck(i,isFound,["É","È","Ê"])
                     break;
                 case "I":
-                    switch (wordArray[i]) {
-                        case "Ï":
-                            isFound = foundLetter(i,"Ï");
-                            break;
-                        case "Î":
-                            isFound = foundLetter(i,"Î");
-                            break;
-                    }
+                    isFound = specialLetterCheck(i,isFound,["Î","Ï"])
+                    break;
                 case "C":
-                    switch (wordArray[i]){
-                        case "Ç":
-                            isFound = foundLetter(i,"Ç");
-                            break;
-                    }
+                    isFound = specialLetterCheck(i,isFound,["Ç"])
                     break;
                 case "O":
-                    switch (wordArray[i]){
-                        case "Ô":
-                            isFound = foundLetter(i,"Ô");
-                            break;
-                        case "Ö":
-                            isFound = foundLetter(i,"Ö");
-                            break;
-                    }
+                    isFound = specialLetterCheck(i,isFound,["Ô","Ö"])
                     break;
                 case "U":
-                    switch (wordArray[i]){
-                        case "Û":
-                            isFound = foundLetter(i,"Û");
-                            break;
-                        case "Ü":
-                            isFound = foundLetter(i,"Ü");
-                            break;
-                    }
+                    isFound = specialLetterCheck(i,isFound,["Û","Ü"])
                     break;
             }
         }
@@ -212,11 +188,11 @@ function guessLetter(letter){
         used.innerHTML += `${letter} ` // Ajout de la lettre en dessous du bonhomme
     }
 
-    for(let i = 4; i < 10 ; i++){
-        document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
-    }
-
+    // On change l'humeur du personnage si sa tête apparait
     if (attempt >= 4){
+        for(let i = 4; i < 10 ; i++){
+            document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+        }
         document.getElementsByClassName(`mood-${attempt}`)[0].style.display = "inline";
     }
 
@@ -237,11 +213,11 @@ function guessLetter(letter){
     }
 }
 
-function specialLetterCheck(i,letter,array){
-    let isFound = false
-    for(const l of array){
-        if (l == wordArray[i]){
-            isFound = foundLetter(i,l);
+function specialLetterCheck(i,foundState,array){
+    let isFound = foundState
+    for(const letter of array){
+        if (letter == wordArray[i]){
+            isFound = foundLetter(i,letter);
         }
     }
     return isFound
@@ -291,6 +267,10 @@ function gameOver(won){
                 penduField.innerHTML += `<span class="red">${wordArray[i]}</span> `
             }
         }    
+        for(let i = 4; i < 10 ; i++){
+            document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+        }
+        document.getElementsByClassName(`mood-9`)[0].style.display = "inline";
     }
 
     if (won == "debug-lose"){
