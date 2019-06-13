@@ -45,7 +45,7 @@ req.onreadystatechange = function (){
 }
 
 // Réinitialisation
-function resetGame(){
+function resetGame(wordParameter = null){
     // On vide les différents champs de texte
     penduField.innerHTML = ''  
     msgField.innerHTML = ''     
@@ -59,10 +59,15 @@ function resetGame(){
     attempt = 0;
     inputs = [];
 
-    // On prend un mot aléatoire dans le tableau des mots
-    let rand = Math.floor(Math.random() * wordTable.length)
-    word = wordTable[rand]
-    log(rand)
+    if (wordParameter == null){
+        // On prend un mot aléatoire dans le tableau des mots
+        let rand = Math.floor(Math.random() * wordTable.length)
+        word = wordTable[rand]
+        log(rand)
+    } else {
+        word = wordParameter
+    }
+    
 
     // On transpose les lettres du mot dans un tableau
     for(i = 0; i < word.length; i++) {
@@ -108,7 +113,7 @@ document.getElementById("letter").addEventListener("keypress", function(key){   
 })
 
 // Boutton recommencer
-document.getElementById("resetButton").addEventListener("click", resetGame);
+document.getElementById("resetButton").addEventListener("click", () => resetGame());
 
 // Fonction pour vérifier si c'est une lettre valide avant d'aller à la fonction du pendu
 function inputCheck () {
