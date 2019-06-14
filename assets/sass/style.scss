@@ -102,6 +102,25 @@ body {
     // display: none;
 }
 
+.bottom{
+  height: 32px;
+}
+
+#cheatMenu{
+  margin-top: 5em;
+}
+
+footer{
+  p{
+    text-align: center;
+    margin: 2px 0;
+    a{
+      color: black;
+      font-size: .7em;
+    }
+  }
+}
+
 /* ================== Menu de triche ================== */
 #cheatMenu {
     display: none;

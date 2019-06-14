@@ -158,7 +158,7 @@ function guessLetter(letter){
             // On vérifie si la réponse contiens un accens, si c'est le cas, elle sera accepté pour la lettre entrée
             switch (letter) {
                 case "A":
-                    isFound = specialLetterCheck(i,isFound,["Â"])
+                    isFound = specialLetterCheck(i,isFound,["Â","À"])
                     break;
                 case "E":
                     isFound = specialLetterCheck(i,isFound,["É","È","Ê"])
@@ -295,7 +295,7 @@ document.addEventListener("keydown", key => {
     
     
         if (cheatSeq == cheatCode.length){
-            document.getElementById("cheatMenu").style.display = "inline"
+            document.getElementById("cheatMenu").style.display = "block"
             console.log("cheat activated!")
             cheatActivated = true;
     
