@@ -13,6 +13,10 @@ html {
           box-sizing: inherit;
 }
 
+.responsiveMenu {
+  display: none;
+}
+
 body {
   background-color: lightsteelblue;
 }
@@ -39,17 +43,24 @@ body {
   display: none;
 }
 
-#pendu, #used {
-  font-family: 'Roboto Mono', monospace;
+.pendu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-#used {
-  text-align: right;
+#pendu {
+  font-family: 'Roboto Mono', monospace;
+  margin-bottom: 5px;
 }
 
 #message {
+  margin-top: 0;
   font-weight: bold;
-  height: 1em;
+  min-height: 1.2em;
 }
 
 .hide {
@@ -73,9 +84,8 @@ input {
   padding: 10px;
 }
 
-input[type="text"] {
-  width: 50px;
-  text-align: center;
+input[type="password"] {
+  font-size: 16px;
 }
 
 button {
@@ -84,6 +94,7 @@ button {
   border: 2px solid #000;
   padding: 10px;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 button:hover {
@@ -97,10 +108,7 @@ button:active {
 #keyboard {
   text-align: center;
   margin-top: 1em;
-}
-
-#keyboard button {
-  height: 3rem;
+  margin-bottom: 1em;
 }
 
 #keyboard button[disabled] {
@@ -114,8 +122,9 @@ button:active {
 
 .letter-button {
   padding: 10px 0px 10px 0px;
-  width: 40px;
-  margin: 5px;
+  width: 32px;
+  margin: 3px;
+  font-weight: bold;
 }
 
 /* ================== SVG du pendu ================== */
@@ -155,14 +164,6 @@ button:active {
   stroke-width: 2px;
 }
 
-.bottom {
-  height: 32px;
-}
-
-#cheatMenu {
-  margin-bottom: 1em;
-}
-
 footer p {
   text-align: center;
   margin: 2px 0;
@@ -176,23 +177,91 @@ footer p a {
 /* ================== Menu de triche ================== */
 #cheatMenu {
   display: none;
+  margin-bottom: 1em;
 }
 
-@media screen and (max-width: 450px) {
-  #hang-guy {
+@media screen and (min-width: 610px) {
+  .letter-button {
+    font-size: 2rem;
+    width: 55px;
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .responsiveMenu {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    position: absolute;
+    right: 10px;
+    top: 300px;
+  }
+  .responsiveMenu #showRespMenu {
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+  }
+  .pendu {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .texts {
+    width: 100%;
+    text-align: center;
   }
   .hang-figure {
     width: 100px;
     height: 235px;
   }
+  #pendu {
+    font-size: 20px;
+  }
+  .menu {
+    position: fixed;
+    text-align: right;
+    background-color: #97b1d3;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 225px;
+    padding: 0 10px 0 10px;
+    border-left: 3px solid black;
+    -webkit-transition: -webkit-transform 1s;
+    transition: -webkit-transform 1s;
+    -o-transition: transform 1s;
+    transition: transform 1s;
+    transition: transform 1s, -webkit-transform 1s;
+  }
+  .menu #resetInput {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .hideResponsiveMenu {
+    -webkit-transform: translateX(230px);
+        -ms-transform: translateX(230px);
+            transform: translateX(230px);
+    -webkit-transition: -webkit-transform 1s;
+    transition: -webkit-transform 1s;
+    -o-transition: transform 1s;
+    transition: transform 1s;
+    transition: transform 1s, -webkit-transform 1s;
+  }
   #keyboard {
-    width: 100%;
+    min-height: 30px;
   }
 }
 /*# sourceMappingURL=style.css.map */

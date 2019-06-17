@@ -9,9 +9,10 @@ const letterInput = document.getElementById("letter");
 const penduField = document.getElementById("pendu");
 const chancesField = document.getElementById("chances");
 const msgField = document.getElementById("message");
-const used = document.getElementById("used")
 const hangGuy = document.getElementById("hang-guy")
 
+const responsiveMenu = document.getElementsByClassName("menu")[0];
+const responsiveMenuButton = document.getElementById("showRespMenu")
 const resetDiv = document.getElementById("resetInput");
 const keyboardDiv = document.getElementById("keyboard")
 const nbWordsField = document.getElementById("nbWords");
@@ -25,6 +26,7 @@ let word = "";           // Mot sélectionné vide
 let wordArray = [];      // Tableau vide du mot
 let pendu = [];          // Tableau vide de l'affichage du pendu
 let gameIsOver = true;
+let debugDisplayed = false;
 
 
 let wordTable;
@@ -44,13 +46,13 @@ req.onreadystatechange = function (){
                 msgField.innerHTML = `Une erreur est survenue lors tu traitement de la liste des mots.<br/> ${err}`
                 msgField.style.color = "red"
                 msgField.style.fontSize = "30px"
+                console.error(err)
             }
         } else {
             console.error(`Erreur ${req.status}`)
             msgField.innerHTML = `Erreur ${req.status} lors de la lecture de la liste des mots`
             msgField.style.color = "red"
             msgField.style.fontSize = "30px"
-
         }
     }
 }
@@ -70,11 +72,30 @@ function gameInit(){
     }
     document.getElementsByClassName(`mood-win`)[0].style.display = "none";
     document.getElementsByClassName(`mood-4`)[0].style.display = "inline";
+
+    document.addEventListener("keypress", e => {
+        if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)){
+            inputCheck(e.key)
+        }
+    })
 }
+
+// Boutton menu responsive
+responsiveMenuButton.addEventListener("click", () => responsiveMenu.classList.remove("hideResponsiveMenu"))
+
+// Fermeture menu responsive
+window.addEventListener('click', e => {
+    if (e.target != responsiveMenu && e.target.parentNode != responsiveMenu && e.target != responsiveMenuButton){
+        responsiveMenu.classList.add('hideResponsiveMenu') 
+    }
+})
 
 // Boutton recommencer
 for (const button of document.getElementsByClassName("resetButton")) {
-    button.addEventListener("click", () => newGame("array", button.getAttribute("data-object")));
+    button.addEventListener("click", () => {
+        newGame("array", button.getAttribute("data-object"))
+        responsiveMenu.classList.add('hideResponsiveMenu') 
+    });
 }
 
 // Réinitialisation
@@ -82,7 +103,6 @@ function newGame(type, data){
     // On vide les différents champs de texte
     penduField.innerHTML = ''   
     msgField.innerHTML = ''     
-    used.innerHTML = ''         
     penduField.className=""     
 
     // On réinitialise toutes les variables
@@ -126,7 +146,7 @@ function newGame(type, data){
     }
 
     
-    resetDiv.className='hide'                                   // On madsque le boutton "recommencer"
+    // resetDiv.className='hide'                                   // On madsque le boutton "recommencer"
 
     // On masque chaque partie du bonhomme pendu
     for(let i = 1; i < 10; i++) {
@@ -140,8 +160,10 @@ function newGame(type, data){
     document.getElementsByClassName(`mood-win`)[0].style.display = "none";
 
     // Message pour le débogage
-    console.log(`Le mot sélectionné est: "${word}"`)
-    console.log(wordArray)
+    if (debugDisplayed){
+        console.log(`Le mot sélectionné est: "${word}"`)
+        console.log(wordArray)
+    }
 
     // Création des bouttons des lettres
     keyboardDiv.innerHTML = ''
@@ -156,11 +178,6 @@ function newGame(type, data){
             inputCheck(e.target.id)
         })
     }
-
-    document.addEventListener("keypress", e => {
-        console.log(e.keyCode)
-        inputCheck(e.key)
-    })
 }
 
 // Fonction pour vérifier si c'est une lettre valide avant d'aller à la fonction du pendu
@@ -221,7 +238,6 @@ function guessLetter(letter){
     if (!isFound){
         attempt++
         document.getElementsByClassName(`attempt-${attempt}`)[0].style.display = 'inline' // Affichage du morceau du SVG
-        used.innerHTML += `${letter} ` // Ajout de la lettre en dessous du bonhomme
     }
 
     // On change l'humeur du personnage si sa tête apparait
@@ -334,30 +350,54 @@ document.addEventListener("keydown", key => {
                 cheatSeq++
             }
         }
-    
-    
-        if (cheatSeq == cheatCode.length){
-            document.getElementById("cheatMenu").style.display = "block"
-            console.log("cheat activated!")
-            cheatActivated = true;
-    
-            document.getElementById("debug-win").addEventListener("click", () => gameOver(true))
-            document.getElementById("debug-lose").addEventListener("click", () => gameOver("debug-lose"))
-            
-            document.getElementById("custom").addEventListener("keypress", key => {   // Boutton entrer dans la page HTML
-                if(key.keyCode == 13){
-                    customWord();
-                }
-            })
-            
-            document.getElementById("debug-custom").addEventListener("click", () => customWord())
-
-            
-        }
+        if (cheatSeq == cheatCode.length){displayDebugMenu()}
     }
 })
+
+function displayDebugMenu(){
+    document.getElementById("cheatMenu").style.display = "block"
+    console.log("cheat activated!")
+    cheatActivated = true;
+
+    document.getElementById("debug-win").addEventListener("click", () => gameOver(true))
+    document.getElementById("debug-lose").addEventListener("click", () => gameOver("debug-lose"))
+    
+    document.getElementById("custom").addEventListener("keypress", key => {   // Boutton entrer dans la page HTML
+        if(key.keyCode == 13){
+            customWord();
+        }
+    })
+    
+    document.getElementById("debug-custom").addEventListener("click", () => customWord())
+
+    debugDisplayed = true
+}
 
 function customWord(){
     let custom = document.getElementById("custom").value
     newGame("custom",custom)
+}
+
+document.getElementById("debug-debug").addEventListener("click", debugMode)
+
+function debugMode(){
+    newGame("custom","Debug")
+    msgField.innerHTML = `Mode débogage`
+    resetDiv.className = ""
+    gameIsOver = true
+
+    // On masque l'humeur du personnage
+    for(let i = 4; i < 10; i++) {
+        document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+    }
+    document.getElementsByClassName(`mood-win`)[0].style.display = "none";
+    document.getElementsByClassName(`mood-4`)[0].style.display = "inline";
+
+    for(let i = 1; i < 10; i++) {
+        document.getElementsByClassName(`attempt-${i}`)[0].style.display = "inline";
+    }
+
+    penduField.innerHTML = "D E B U G"
+
+    // displayDebugMenu()
 }
