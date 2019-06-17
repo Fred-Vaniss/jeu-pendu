@@ -45,6 +45,7 @@ body {
 
 #message {
   font-weight: bold;
+  height: 1em;
 }
 
 .hide {

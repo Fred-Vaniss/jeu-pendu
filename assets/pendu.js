@@ -12,7 +12,6 @@ const msgField = document.getElementById("message");
 const used = document.getElementById("used")
 const hangGuy = document.getElementById("hang-guy")
 
-const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
 const lettersDiv = document.getElementById("letters")
 const nbWordsField = document.getElementById("nbWords");
@@ -25,6 +24,7 @@ let inputs = []          // Tableau des lettres déjà insérés
 let word = "";           // Mot sélectionné vide
 let wordArray = [];      // Tableau vide du mot
 let pendu = [];          // Tableau vide de l'affichage du pendu
+let gameIsOver = true;
 
 
 let wordTable;
@@ -45,7 +45,6 @@ req.onreadystatechange = function (){
             msgField.style.color = "red"
             msgField.style.fontSize = "30px"
 
-            inputDiv.style.display = "none"
         }
     }
 }
@@ -87,6 +86,7 @@ function newGame(type, data){
     found = 0;
     attempt = 0;
     inputs = [];
+    gameIsOver = false;
 
     if (type == "array"){
         // On prend un mot aléatoire dans le tableau des mots
@@ -120,7 +120,6 @@ function newGame(type, data){
     }
 
     
-    inputDiv.className=''                                       // On affiche le champ de texte
     resetDiv.className='hide'                                   // On madsque le boutton "recommencer"
 
     // On masque chaque partie du bonhomme pendu
@@ -139,6 +138,7 @@ function newGame(type, data){
     console.log(wordArray)
 
     // Création des bouttons des lettres
+    lettersDiv.innerHTML = ''
     for(i = 65; i <= 90; i++) {
         let letter = String.fromCharCode(i)
         lettersDiv.innerHTML += `<button id="${letter}" class="letter-button">${letter}</button>`
@@ -147,30 +147,21 @@ function newGame(type, data){
     const letterButtons = document.getElementsByClassName("letter-button")
     for (const button of letterButtons) {
         button.addEventListener("click", e => {
-            console.log(e.target.id)
+            inputCheck(e.target.id)
         })
     }
 }
 
-
-document.getElementById("guessButton").addEventListener("click", inputCheck);   // Le clic pour boutton
-document.getElementById("letter").addEventListener("keypress", function(key){   // Boutton entrer dans la page HTML
-    if(key.keyCode == 13){
-        inputCheck();
-    }
-})
-
 // Fonction pour vérifier si c'est une lettre valide avant d'aller à la fonction du pendu
-function inputCheck () {
-    let letter = letterInput.value
-    if(letter.match(/[a-z]/i)){
-        guessLetter(letter.toUpperCase());
-    } else {
-        msgField.className = 'red'
-        msgField.innerHTML = "Ce n'est pas une lettre valide";
+function inputCheck (value) {
+    if(!gameIsOver){
+        if(value.match(/[a-z]/i)){
+            guessLetter(value.toUpperCase());
+        } else {
+            msgField.className = 'red'
+            msgField.innerHTML = "Ce n'est pas une lettre valide";
+        }
     }
-
-    letterInput.value = ''
 }
 
 // Fonction de vérification de la lettre entrée
@@ -239,6 +230,11 @@ function guessLetter(letter){
     penduField.innerHTML = stringPendu;
     msgField.innerHTML = ''
 
+    let inputLetter = document.getElementById(letter);
+    inputLetter.style.color = "gray"
+    inputLetter.style.border = "2px solid gray"
+    inputLetter.disabled = 'disabled'
+
     // Affichage d'un message si on a gagné ou perdu
     if(found == wordArray.length){
         gameOver(true);
@@ -267,9 +263,9 @@ function foundLetter(i,letter){
 // Fonction de fin de partie
 function gameOver(won){
     // On masque le champ de texte et affiche le boutton recommencer
-    inputDiv.className='hide'
     resetDiv.className=''
     penduField.innerHTML=""
+    gameIsOver = true
     
     // Si la partie est gagnée, on affiche le texte en vert
     if (won == true){
