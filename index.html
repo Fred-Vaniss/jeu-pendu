@@ -12,28 +12,21 @@
 <body>
     <div class="wrapper">
         <h1>Jeu du pendu</h1>
+        <div id="resetInput" class="hide">
+            <button class="resetButton" data-object="words">Mot (<span id="nbWords"></span>)</button>
+            <button class="resetButton" data-object="names">Nom BeCode (<span id="nbNames"></span>)</button>
+        </div>
         <div class="flex">
             <div class="col">
-                <div id="resetInput" class="hide">
-                    <button class="resetButton" data-object="words">Mot aléatoire (<span id="nbWords"></span> mots)</button>
-                    <button class="resetButton" data-object="names">Nom aléatoire (<span id="nbNames"></span> noms)</button>
+                <div class="pendu">
+                    <h2 id="pendu"></h2>
+                    <p id="message">Script non chargée, une erreur à du survenir.</p>
                 </div>
-                <h2 id="pendu"></h2>
-                <p id="chances"></p>
-                <p id="message">Script non chargée, une erreur à du survenir.</p>
-                <div id="letters">
-
-                </div>
-                <div id="cheatMenu">
-                    <h1>Debug Menu</h1>
-                    <button id="debug-win">Win game</button>
-                    <button id="debug-lose">Lose game</button>
-                    <input type="password" name="custom" id="custom">
-                    <button id="debug-custom">Custom word</button>
+                <div id="keyboard">
                 </div>
             </div>
             <div id="hang-guy" class="col">
-                <svg xmlns="http://www.w3.org/2000/svg" width="179.23" height="410" viewBox="0 0 179.23 410">
+                <svg class="hang-figure" xmlns="http://www.w3.org/2000/svg" width="179.23" height="410" viewBox="0 0 179.23 410">
                     <title>hangman</title>
                     <g id="Hangman">
                         <line class="hang attempt-1 cls-1" x1="145.23" y1="406" x2="175.23" y2="406" />
@@ -168,11 +161,18 @@
         <div class="bottom">
             <h2 id="used"></h2>
         </div>
+        <div id="cheatMenu">
+                <h1>Debug Menu</h1>
+                <button id="debug-win">Win game</button>
+                <button id="debug-lose">Lose game</button>
+                <input type="password" name="custom" id="custom">
+                <button id="debug-custom">Custom word</button>
+            </div>
+        <footer>
+            <p>Par Frédérick Van Isschot @ BeCode</p>
+            <p><a href="https://github.com/Fred-Vaniss/jeu-pendu" target="_blank">Dépot GitHub</a></p>
+        </footer>
     </div>
-    <footer>
-        <p>Par Frédérick Van Isschot @ BeCode</p>
-        <p><a href="https://github.com/Fred-Vaniss/jeu-pendu" target="_blank">Dépot GitHub</a></p>
-    </footer>
 
     <script src="assets/pendu.js"></script>
 </body>

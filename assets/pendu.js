@@ -13,7 +13,7 @@ const used = document.getElementById("used")
 const hangGuy = document.getElementById("hang-guy")
 
 const resetDiv = document.getElementById("resetInput");
-const lettersDiv = document.getElementById("letters")
+const keyboardDiv = document.getElementById("keyboard")
 const nbWordsField = document.getElementById("nbWords");
 const nbNamesField = document.getElementById("nbNames");
 
@@ -144,10 +144,10 @@ function newGame(type, data){
     console.log(wordArray)
 
     // Création des bouttons des lettres
-    lettersDiv.innerHTML = ''
+    keyboardDiv.innerHTML = ''
     for(i = 65; i <= 90; i++) {
         let letter = String.fromCharCode(i)
-        lettersDiv.innerHTML += `<button id="${letter}" class="letter-button">${letter}</button>`
+        keyboardDiv.innerHTML += `<button id="${letter}" class="letter-button">${letter}</button>`
     }
 
     const letterButtons = document.getElementsByClassName("letter-button")
@@ -157,7 +157,10 @@ function newGame(type, data){
         })
     }
 
-    document.addEventListener("keypress", e => inputCheck(e.key))
+    document.addEventListener("keypress", e => {
+        console.log(e.keyCode)
+        inputCheck(e.key)
+    })
 }
 
 // Fonction pour vérifier si c'est une lettre valide avant d'aller à la fonction du pendu
@@ -238,9 +241,7 @@ function guessLetter(letter){
     penduField.innerHTML = stringPendu;
     msgField.innerHTML = ''
 
-    let inputLetter = document.getElementById(letter);
-    inputLetter.style.color = "gray"
-    inputLetter.style.border = "2px solid gray"
+    let inputLetter = document.getElementById(letter)
     inputLetter.disabled = 'disabled'
 
     // Affichage d'un message si on a gagné ou perdu
@@ -329,6 +330,9 @@ document.addEventListener("keydown", key => {
             cheatSeq++
         } else {
             cheatSeq = 0
+            if (key.keyCode == cheatCode[cheatSeq]){
+                cheatSeq++
+            }
         }
     
     
