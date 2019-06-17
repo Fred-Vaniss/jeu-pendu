@@ -36,9 +36,15 @@ req.send()
 req.onreadystatechange = function (){
     if(req.readyState === XMLHttpRequest.DONE){
         if(req.status == 200){
-            wordTable = req.response;                   // On stocke les données récupérés dans une variable
-            wordTable = JSON.parse(wordTable);
-            gameInit();
+            try{
+                wordTable = req.response;                   // On stocke les données récupérés dans une variable
+                wordTable = JSON.parse(wordTable);
+                gameInit();
+            } catch (err) {
+                msgField.innerHTML = `Une erreur est survenue lors tu traitement de la liste des mots.<br/> ${err}`
+                msgField.style.color = "red"
+                msgField.style.fontSize = "30px"
+            }
         } else {
             console.error(`Erreur ${req.status}`)
             msgField.innerHTML = `Erreur ${req.status} lors de la lecture de la liste des mots`
