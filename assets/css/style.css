@@ -63,6 +63,31 @@ body {
   margin-left: 20px;
 }
 
+input {
+  font-size: 1.5rem;
+  padding: 10px;
+}
+
+input[type="text"] {
+  width: 50px;
+  text-align: center;
+}
+
+button {
+  font-size: 1.5rem;
+  background-color: lightsteelblue;
+  border: 2px solid #000;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: #c4d3e6;
+}
+
+button:active {
+  background-color: steelblue;
+}
+
 /* ================== SVG du pendu ================== */
 .cls-1, .cls-4, .cls-6, .cls-7 {
   fill: none;

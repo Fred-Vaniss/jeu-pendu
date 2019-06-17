@@ -55,6 +55,15 @@ function gameInit(){
 
     msgField.innerHTML = '';
     resetDiv.classList.remove("hide");
+
+    hangGuy.style.display = "block"; 
+
+    // On masque l'humeur du personnage
+    for(let i = 4; i < 10; i++) {
+        document.getElementsByClassName(`mood-${i}`)[0].style.display = "none";
+    }
+    document.getElementsByClassName(`mood-win`)[0].style.display = "none";
+    document.getElementsByClassName(`mood-4`)[0].style.display = "inline";
 }
 
 // Boutton recommencer
@@ -69,7 +78,6 @@ function newGame(type, data){
     msgField.innerHTML = ''     
     used.innerHTML = ''         
     penduField.className=""     
-    hangGuy.style.display = "block"; 
 
     // On réinitialise toutes les variables
     wordArray = [];
