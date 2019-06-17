@@ -14,6 +14,7 @@ const hangGuy = document.getElementById("hang-guy")
 
 const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
+const lettersDiv = document.getElementById("letters")
 const nbWordsField = document.getElementById("nbWords");
 const nbNamesField = document.getElementById("nbNames");
 
@@ -136,6 +137,19 @@ function newGame(type, data){
     // Message pour le débogage
     console.log(`Le mot sélectionné est: "${word}"`)
     console.log(wordArray)
+
+    // Création des bouttons des lettres
+    for(i = 65; i <= 90; i++) {
+        let letter = String.fromCharCode(i)
+        lettersDiv.innerHTML += `<button id="${letter}" class="letter-button">${letter}</button>`
+    }
+
+    const letterButtons = document.getElementsByClassName("letter-button")
+    for (const button of letterButtons) {
+        button.addEventListener("click", e => {
+            console.log(e.target.id)
+        })
+    }
 }
 
 
