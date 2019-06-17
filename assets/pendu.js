@@ -150,6 +150,8 @@ function newGame(type, data){
             inputCheck(e.target.id)
         })
     }
+
+    document.addEventListener("keypress", e => inputCheck(e.key))
 }
 
 // Fonction pour vérifier si c'est une lettre valide avant d'aller à la fonction du pendu
