@@ -14,6 +14,8 @@ const hangGuy = document.getElementById("hang-guy")
 
 const inputDiv = document.getElementById("gameInputs");
 const resetDiv = document.getElementById("resetInput");
+const nbWordsField = document.getElementById("nbWords");
+const nbNamesField = document.getElementById("nbNames");
 
 let found = 0;           // Compteur de lettres trouvés
 let attempt = 0;         // Compteur de chances
@@ -34,9 +36,8 @@ req.onreadystatechange = function (){
     if(req.readyState === XMLHttpRequest.DONE){
         if(req.status == 200){
             wordTable = req.response;                   // On stocke les données récupérés dans une variable
-            wordTable = JSON.parse(wordTable);  
-            hangGuy.style.display = "block";       // On convertis son texte brut en véritable données JSON
-            resetGame();                                // On initialise le jeu
+            wordTable = JSON.parse(wordTable);
+            gameInit();
         } else {
             console.error(`Erreur ${req.status}`)
             msgField.innerHTML = `Erreur ${req.status} lors de la lecture de la liste des mots`
@@ -48,13 +49,27 @@ req.onreadystatechange = function (){
     }
 }
 
+function gameInit(){
+    nbWordsField.innerText = wordTable.words.length;
+    nbNamesField.innerText = wordTable.names.length;
+
+    msgField.innerHTML = '';
+    resetDiv.classList.remove("hide");
+}
+
+// Boutton recommencer
+for (const button of document.getElementsByClassName("resetButton")) {
+    button.addEventListener("click", () => newGame("array", button.getAttribute("data-object")));
+}
+
 // Réinitialisation
-function resetGame(wordParameter = null){
+function newGame(type, data){
     // On vide les différents champs de texte
     penduField.innerHTML = ''   
     msgField.innerHTML = ''     
     used.innerHTML = ''         
     penduField.className=""     
+    hangGuy.style.display = "block"; 
 
     // On réinitialise toutes les variables
     wordArray = [];
@@ -64,13 +79,13 @@ function resetGame(wordParameter = null){
     attempt = 0;
     inputs = [];
 
-    if (wordParameter == null){
+    if (type == "array"){
         // On prend un mot aléatoire dans le tableau des mots
-        let rand = Math.floor(Math.random() * wordTable.length)
-        word = wordTable[rand]
+        let rand = Math.floor(Math.random() * wordTable[data].length)
+        word = wordTable[data][rand]
         log(`Mot numéro ${rand}`)
     } else { // Si on éxécute la fonction avec un argument, il récupérera cette valeur en tant que ce mot à trouver
-        word = wordParameter
+        word = data
     }
     
 
@@ -122,9 +137,6 @@ document.getElementById("letter").addEventListener("keypress", function(key){   
         inputCheck();
     }
 })
-
-// Boutton recommencer
-document.getElementById("resetButton").addEventListener("click", () => resetGame());
 
 // Fonction pour vérifier si c'est une lettre valide avant d'aller à la fonction du pendu
 function inputCheck () {
@@ -317,5 +329,5 @@ document.addEventListener("keydown", key => {
 
 function customWord(){
     let custom = document.getElementById("custom").value
-    resetGame(custom)
+    newGame("custom",custom)
 }

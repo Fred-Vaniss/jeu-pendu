@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -14,12 +14,13 @@
         <h1>Jeu du pendu</h1>
         <div class="flex">
             <div class="col">
-                <div id="gameInputs">
+                <div id="gameInputs" class="hide">
                     <input type="text" name="letter" id="letter" maxlength="1">
                     <button id="guessButton">Entrer</button>
                 </div>
                 <div id="resetInput" class="hide">
-                    <button id="resetButton">Recommencer</button>
+                    <button class="resetButton" data-object="words">Mot aléatoire (<span id="nbWords"></span> mots)</button>
+                    <button class="resetButton" data-object="names">Nom aléatoire (<span id="nbNames"></span> noms)</button>
                 </div>
                 <h2 id="pendu"></h2>
                 <p id="chances"></p>
