@@ -264,4 +264,10 @@ footer p a {
     min-height: 30px;
   }
 }
+
+@media screen and (max-height: 800px) and (min-width: 610px) {
+  .hang-figure {
+    height: calc(100vh - 390px);
+  }
+}
 /*# sourceMappingURL=style.css.map */
