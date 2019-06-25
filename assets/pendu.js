@@ -58,8 +58,16 @@ req.onreadystatechange = function (){
 }
 
 function gameInit(){
-    nbWordsField.innerText = wordTable.words.length;
-    nbNamesField.innerText = wordTable.names.length;
+    for (let i = 0; i < wordTable.length; i++) {
+        let button = document.createElement("button")
+        button.className = "resetButton"
+        button.textContent = `${wordTable[i].dispName} (${wordTable[i].words.length})`
+        resetDiv.appendChild(button)
+        button.addEventListener("click", () => {
+            newGame("array", wordTable[i])
+            responsiveMenu.classList.add('hideResponsiveMenu') 
+        })
+    }
 
     msgField.innerHTML = '';
     resetDiv.classList.remove("hide");
@@ -90,14 +98,6 @@ window.addEventListener('click', e => {
     }
 })
 
-// Boutton recommencer
-for (const button of document.getElementsByClassName("resetButton")) {
-    button.addEventListener("click", () => {
-        newGame("array", button.getAttribute("data-object"))
-        responsiveMenu.classList.add('hideResponsiveMenu') 
-    });
-}
-
 // Réinitialisation
 function newGame(type, data){
     // On vide les différents champs de texte
@@ -116,8 +116,8 @@ function newGame(type, data){
 
     if (type == "array"){
         // On prend un mot aléatoire dans le tableau des mots
-        let rand = Math.floor(Math.random() * wordTable[data].length)
-        word = wordTable[data][rand]
+        let rand = Math.floor(Math.random() * data.words.length)
+        word = data.words[rand]
         log(`Mot numéro ${rand}`)
     } else { // Si on éxécute la fonction avec un argument, il récupérera cette valeur en tant que ce mot à trouver
         word = data
