@@ -26,7 +26,7 @@ let word = "";           // Mot sélectionné vide
 let wordArray = [];      // Tableau vide du mot
 let pendu = [];          // Tableau vide de l'affichage du pendu
 let gameIsOver = true;
-let debugDisplayed = true;
+let debugDisplayed = false;
 
 
 let wordTable;
@@ -209,31 +209,35 @@ function guessLetter(letter){
 
     // On définis une variable qui checkera si notre dernière entrée est la bonne réponse
     let isFound = false;
+    let delay = 0
     for(i = 0; i < wordArray.length; i++) {
         if (wordArray[i] == letter){
-            isFound = foundLetter(i,letter)
+            isFound = foundLetter(i,letter,delay)
         } else {
             // On vérifie si la réponse contiens un accens, si c'est le cas, elle sera accepté pour la lettre entrée
             switch (letter) {
                 case "A":
-                    isFound = specialLetterCheck(i,isFound,["Â","À"])
+                    isFound = specialLetterCheck(i,isFound,["Â","À"],delay)
                     break;
                 case "E":
-                    isFound = specialLetterCheck(i,isFound,["É","È","Ê"])
+                    isFound = specialLetterCheck(i,isFound,["É","È","Ê"],delay)
                     break;
                 case "I":
-                    isFound = specialLetterCheck(i,isFound,["Î","Ï"])
+                    isFound = specialLetterCheck(i,isFound,["Î","Ï"],delay)
                     break;
                 case "C":
-                    isFound = specialLetterCheck(i,isFound,["Ç"])
+                    isFound = specialLetterCheck(i,isFound,["Ç"],delay)
                     break;
                 case "O":
-                    isFound = specialLetterCheck(i,isFound,["Ô","Ö"])
+                    isFound = specialLetterCheck(i,isFound,["Ô","Ö"],delay)
                     break;
                 case "U":
-                    isFound = specialLetterCheck(i,isFound,["Û","Ü"])
+                    isFound = specialLetterCheck(i,isFound,["Û","Ü"],delay)
                     break;
             }
+        }
+        if (typeof isFound[1] != "undefined"){
+            delay = isFound[1]
         }
     }
 
@@ -272,26 +276,28 @@ function guessLetter(letter){
     }
 }
 
-function specialLetterCheck(i,foundState,array){
+function specialLetterCheck(i,foundState,array,delay){
     let isFound = foundState
     for(const letter of array){
         if (letter == wordArray[i]){
-            isFound = foundLetter(i,letter);
+            isFound = foundLetter(i,letter,delay);
         }
     }
     return isFound
 }
 
 // Fonction de lettre trouvée
-function foundLetter(i,letter){
+function foundLetter(i,letter,delay){
     pendu[i] = letter;
 
     let letterField = document.getElementById(`letter-${i}`)
-    letterField.innerText = letter;
-    letterField.classList.add("found-anim")
-
+    setTimeout(() => {
+        letterField.innerText = letter;
+        letterField.classList.add("found-anim")
+    }, delay);
+    delay += 50
     found++
-    return true;
+    return [true,delay];
 }
 
 // Fonction de fin de partie
@@ -406,6 +412,4 @@ function debugMode(){
     }
 
     penduField.innerHTML = "D E B U G"
-
-    displayDebugMenu()
 }
