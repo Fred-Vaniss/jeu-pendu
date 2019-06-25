@@ -107,6 +107,9 @@ button{
   &:disabled{
     cursor: default;
   }
+  &::-moz-focus-inner {
+    border: 0;
+  }
 }
 
 #keyboard{
