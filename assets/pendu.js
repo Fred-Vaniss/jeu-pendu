@@ -143,6 +143,10 @@ function newGame(type, data){
             pendu.push("'") 
             wordGroup.innerHTML += `<span id="letter-${i}">'</span> ` 
             found++
+        } else if (word[i] == "&") {
+            pendu.push("&") 
+            wordGroup.innerHTML += `<span id="letter-${i}">&</span> ` 
+            found++
         } else {
             pendu.push("_")                       // Création de cases vide pour les lettres trouvés
             wordGroup.innerHTML += `<span id="letter-${i}">_</span> `          // Cases vide dans l'affichage HTML
