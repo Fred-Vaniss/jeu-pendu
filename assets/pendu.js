@@ -26,7 +26,7 @@ let word = "";           // Mot sélectionné vide
 let wordArray = [];      // Tableau vide du mot
 let pendu = [];          // Tableau vide de l'affichage du pendu
 let gameIsOver = true;
-let debugDisplayed = false;
+let debugDisplayed = true;
 
 
 let wordTable;
@@ -125,25 +125,30 @@ function newGame(type, data){
     
 
     // On transpose les lettres du mot dans un tableau
+    let wordGroup = document.createElement("span")
+    wordGroup.className = "word-group"
     for(i = 0; i < word.length; i++) {
         wordArray.push(word[i].toUpperCase())   // Conversion du mot en éléments du tableau séparé
         if (word[i] == " "){
-            pendu.push(`<span class="space"></span>` ) 
-            penduField.innerHTML += `<span class="space"></span>` 
+            pendu.push(` ` ) 
+            penduField.appendChild(wordGroup)
+            wordGroup = document.createElement("span")
+            wordGroup.className = "word-group" 
             found++
         } else if (word[i] == "-") {
             pendu.push("-") 
-            penduField.innerHTML += `- ` 
+            wordGroup.innerHTML += `<span id="letter-${i}">-</span> ` 
             found++
         } else if (word[i] == "'") {
             pendu.push("'") 
-            penduField.innerHTML += `' ` 
+            wordGroup.innerHTML += `<span id="letter-${i}">'</span> ` 
             found++
         } else {
             pendu.push("_")                       // Création de cases vide pour les lettres trouvés
-            penduField.innerHTML += "_ "          // Cases vide dans l'affichage HTML
+            wordGroup.innerHTML += `<span id="letter-${i}">_</span> `          // Cases vide dans l'affichage HTML
         }
     }
+    penduField.appendChild(wordGroup)
 
     
     // resetDiv.className='hide'                                   // On madsque le boutton "recommencer"
@@ -248,13 +253,7 @@ function guessLetter(letter){
         document.getElementsByClassName(`mood-${attempt}`)[0].style.display = "inline";
     }
 
-    
-    let stringPendu = ""    // Lettres trouvés à afficher dans le prompt
-    for(i = 0; i < pendu.length; i++) {
-        stringPendu = stringPendu + pendu[i] + " "  // Insertion des lettres trouvés dans le string
-    }
 
-    penduField.innerHTML = stringPendu;
     msgField.innerHTML = ''
 
     let inputLetter = document.getElementById(letter)
@@ -281,6 +280,7 @@ function specialLetterCheck(i,foundState,array){
 // Fonction de lettre trouvée
 function foundLetter(i,letter){
     pendu[i] = letter;
+    document.getElementById(`letter-${i}`).innerText = letter;
     found++
     return true;
 }
@@ -289,7 +289,6 @@ function foundLetter(i,letter){
 function gameOver(won){
     // On masque le champ de texte et affiche le boutton recommencer
     resetDiv.className=''
-    penduField.innerHTML=""
     gameIsOver = true
     
     // Si la partie est gagnée, on affiche le texte en vert
@@ -298,10 +297,9 @@ function gameOver(won){
         msgField.className = "green"
         penduField.className="green";
         for(i = 0; i < pendu.length; i++) {
-            if (wordArray[i] == " "){
-                penduField.innerHTML += `<span class="space"></span> `
-            } else {
-                penduField.innerHTML += `${wordArray[i]} `
+            let letter = document.getElementById(`letter-${i}`)
+            if (wordArray[i] != " "){
+                letter.innerHTML = `${wordArray[i]}`
             }
         }
         if (attempt >= 4){
@@ -314,12 +312,13 @@ function gameOver(won){
         msgField.innerHTML = 'Vous avez perdu!'
         msgField.className = "red"
         for(i = 0; i < pendu.length; i++) {
-            if (wordArray[i] == " "){
-                penduField.innerHTML += `<span class="space"></span> `
-            }else if (wordArray[i] == pendu[i]){
-                penduField.innerHTML += `${wordArray[i]} `
-            } else {
-                penduField.innerHTML += `<span class="red">${wordArray[i]}</span> `
+            let letter = document.getElementById(`letter-${i}`)
+            if (wordArray[i] != " "){
+                letter.innerHTML = `${wordArray[i]}`
+                if (wordArray[i] != pendu[i]){
+                    letter.style.color = "red"
+                }
+                
             }
         }    
         for(let i = 4; i < 10 ; i++){

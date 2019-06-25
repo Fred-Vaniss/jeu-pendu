@@ -50,6 +50,14 @@ body {
   margin-bottom: 5px;
 }
 
+.word-group{
+  display: inline-block;
+  &:not(:last-child){
+    margin-right: 40px;
+  }
+}
+
+
 #message {
   margin-top: 0;
   font-weight: bold;
