@@ -1,10 +1,23 @@
-# Jeu du pendu
+# Jeu du pendu <!-- omit in toc -->
 
 - Projet solo par Frédérick Van Isschot
 - Formation: BeCode
 - Mai-Juin 2019
 - HTML, CSS et JavaScript
 
+## Table des matières <!-- omit in toc -->
+
+- [Le simple exercice](#Le-simple-exercice)
+- [Plus loin que ce qui avait été demandé](#Plus-loin-que-ce-qui-avait-été-demandé)
+- [L'approfondissement de l'exercice](#Lapprofondissement-de-lexercice)
+  - [Le bonhomme](#Le-bonhomme)
+  - [Des mots complexes](#Des-mots-complexes)
+  - [Un dictionnaire géant](#Un-dictionnaire-géant)
+  - [Encore plus de fonctionalités](#Encore-plus-de-fonctionalités)
+  - [Un bonhomme expressif](#Un-bonhomme-expressif)
+  - [Un clavier virtuel](#Un-clavier-virtuel)
+  - [Un site responsive](#Un-site-responsive)
+  - [Des aniations et des indicateurs sur le clavier](#Des-aniations-et-des-indicateurs-sur-le-clavier)
 
 ## Le simple exercice
 C'était à la base juste un petit exercice ou il fallait juste faire un `prompt` pour demander à la personne de choisir une lettre et d'afficher à la console les lettres devinés avec un nombre d'essais limités.
@@ -37,11 +50,11 @@ Ensuite, j'ai fais en sorte que mon jeu puisse gérer les espace, traits d'union
 ![Mot composé d'espaces et de lettre à accens](./markdown/screenshot-5.jpg)
 
 ### Un dictionnaire géant
-En cherchant sur internet, j'ai trouvé un générateur de mots aléatoire qui contiens un tableau avec plus de 3000 mots dans son JavaScript, j'ai repris sa ligne de code et collé dans mon script mais vu la taille du machin, mon script (ainsi que Visual Studio Code) présentait des difficultés.
+En cherchant sur internet, j'ai trouvé un générateur de mots aléatoire qui contiens un tableau avec plus de 2700 mots dans son JavaScript, j'ai repris sa ligne de code et collé dans mon script mais vu la taille du machin, mon script (ainsi que Visual Studio Code) présentait des difficultés.
 
-J'ai donc appliqué ce que j'ai vu sur l'AJAX, j'ai mis toute la liste dans un fichier JSON séparé et fait une requête `XMLHttpRequest` pour le chercher.
+J'ai donc appliqué ce que j'ai vu sur l'AJAX: j'ai mis toute la liste dans un fichier JSON séparé et fait une requête `XMLHttpRequest` pour le charger.
 
-Désormais, mon jeu à plus de 3000 mots aléatoire.
+Désormais, mon jeu à plus de 2700 mots sélectionné aléatoirement.
 
 ### Encore plus de fonctionalités
 Un de mes collègues m'a suggéré d'afficher les lettres tapés, je l'ai donc appliqué et je me suis aussi amusé à ajouter un menu caché qui peut être affiché après avoir tapé un *code de triche* avec les touches flèchées
@@ -52,3 +65,22 @@ Un de mes collègues m'a suggéré d'afficher les lettres tapés, je l'ai donc a
 Je me suis amusé à rajouter des détails à mon bonhomme en lui ajoutant des expression au fur et à mesure qu'on se trompe
 
 ![Un bonhomme très expressif](./markdown/screenshot-7.gif)
+
+### Un clavier virtuel
+Devoir sélectionner le champ de texte et de taper la lettre puis la touche entrer peut être pénible et redondant.
+
+J'ai donc amélioré cela en y ajoutant un clavier virtuel où on pourra pliquer dessus pour entrer ses lettres, j'ai aussi fait en sorte qu'on puissse aussi entrer ses lettres d'un simple pression de touche sur son clavier.
+
+![Le clavier virtuel](./markdown/screenshot-8.jpg)
+
+### Un site responsive
+J'ai aussi fait en sorte que le jeu soit présentable sur mobile, que tous les éléments soient visible et utilisable sans difficulté.
+
+![Le jeu sur mobile](./markdown/screenshot-9.jpg)
+
+### Des aniations et des indicateurs sur le clavier
+Pour rendre le tout un peu plus dynamique, j'ai aussi apporter des petites animation sur les lettres à afficher ainsi qu'au clavier.
+
+Ce fut une tâche qui était plus compliqué que prévu étant donné que j'ai du ré-écrire une bonne partie sur la façon d'afficher les lettres sur ma page.
+
+![Les animations](./markdown/screenshot-10.gif)
