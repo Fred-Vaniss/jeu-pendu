@@ -201,9 +201,10 @@ function inputCheck (value) {
 function guessLetter(letter){
     // On vérifie d'abord si la lettre n'a pas été déjà entrée
     if (inputs.indexOf(letter) > -1){
+        msgField.innerHTML = ''
         console.error('Cette lettre à déjà été inséré');
         msgField.className = 'red'
-        msgField.innerHTML = 'Cette lettre à déjà été inséré';
+        msgField.innerHTML = '<span class="shake-horizontal">Cette lettre à déjà été inséré</span>';
         return;
     }
 
