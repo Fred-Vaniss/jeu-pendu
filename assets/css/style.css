@@ -103,6 +103,7 @@ button {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 button:hover {
@@ -111,6 +112,10 @@ button:hover {
 
 button:active {
   background-color: steelblue;
+}
+
+button:disabled {
+  cursor: default;
 }
 
 #keyboard {
@@ -243,6 +248,7 @@ footer p a {
     width: 225px;
     padding: 0 10px 0 10px;
     border-left: 3px solid black;
+    z-index: 100;
     -webkit-transition: -webkit-transform 1s;
     transition: -webkit-transform 1s;
     -o-transition: transform 1s;
@@ -277,5 +283,96 @@ footer p a {
   .hang-figure {
     height: calc(100vh - 390px);
   }
+}
+
+@-webkit-keyframes fade-in-top {
+  0% {
+    position: relative;
+    top: -50px;
+    opacity: 0;
+  }
+  99% {
+    position: relative;
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    position: static;
+  }
+}
+
+@keyframes fade-in-top {
+  0% {
+    position: relative;
+    top: -50px;
+    opacity: 0;
+  }
+  99% {
+    position: relative;
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    position: static;
+  }
+}
+
+.found-anim {
+  -webkit-animation: fade-in-top 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+          animation: fade-in-top 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes right {
+  0% {
+    color: forestgreen;
+    border-color: forestgreen;
+  }
+  100% {
+    color: #88bb88;
+    border-color: #88bb88;
+  }
+}
+
+@keyframes right {
+  0% {
+    color: forestgreen;
+    border-color: forestgreen;
+  }
+  100% {
+    color: #88bb88;
+    border-color: #88bb88;
+  }
+}
+
+.green-letter-anim {
+  -webkit-animation: right 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+          animation: right 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes wrong {
+  0% {
+    color: red;
+    border-color: red;
+  }
+  100% {
+    color: #d69b9b;
+    border-color: #d69b9b;
+  }
+}
+
+@keyframes wrong {
+  0% {
+    color: red;
+    border-color: red;
+  }
+  100% {
+    color: #d69b9b;
+    border-color: #d69b9b;
+  }
+}
+
+.red-letter-anim {
+  -webkit-animation: wrong 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+          animation: wrong 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
 /*# sourceMappingURL=style.css.map */

@@ -96,11 +96,16 @@ button{
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  
   &:hover{
     background-color: rgb(196, 211, 230);
   }
   &:active{
     background-color: steelblue;
+  }
+  cursor: pointer;
+  &:disabled{
+    cursor: default;
   }
 }
 
@@ -234,6 +239,7 @@ footer{
     width: 225px;
     padding: 0 10px 0 10px;
     border-left: 3px solid black;
+    z-index: 100;
     #resetInput{
       display: flex;
       flex-direction: column;
@@ -256,4 +262,56 @@ footer{
   .hang-figure{
     height: calc(100vh - 390px);
   }
+}
+
+@keyframes fade-in-top {
+  0% {
+    position: relative;
+            top: -50px;
+    opacity: 0;
+  }
+  99% {
+    position: relative;
+            top: 0;
+    opacity: 1;
+  }
+  100%{
+    position: static;
+  }
+}
+
+.found-anim{
+  animation: fade-in-top 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@keyframes right {
+  0%{
+    color: forestgreen;
+    border-color: forestgreen;
+  }
+
+  100%{
+    color: #88bb88;
+    border-color: #88bb88;
+  }
+}
+
+.green-letter-anim{
+  animation: right 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@keyframes wrong{
+  0%{
+    color: red;
+    border-color: red;
+  }
+
+  100%{
+    color: #d69b9b;
+    border-color: #d69b9b;
+  }
+}
+
+.red-letter-anim{
+  animation: wrong 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }

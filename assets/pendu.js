@@ -258,6 +258,11 @@ function guessLetter(letter){
 
     let inputLetter = document.getElementById(letter)
     inputLetter.disabled = 'disabled'
+    if (isFound){
+        inputLetter.classList.add("green-letter-anim")
+    } else {
+        inputLetter.classList.add("red-letter-anim")
+    }
 
     // Affichage d'un message si on a gagné ou perdu
     if(found == wordArray.length){
@@ -280,7 +285,11 @@ function specialLetterCheck(i,foundState,array){
 // Fonction de lettre trouvée
 function foundLetter(i,letter){
     pendu[i] = letter;
-    document.getElementById(`letter-${i}`).innerText = letter;
+
+    let letterField = document.getElementById(`letter-${i}`)
+    letterField.innerText = letter;
+    letterField.classList.add("found-anim")
+
     found++
     return true;
 }
@@ -398,5 +407,5 @@ function debugMode(){
 
     penduField.innerHTML = "D E B U G"
 
-    // displayDebugMenu()
+    displayDebugMenu()
 }
